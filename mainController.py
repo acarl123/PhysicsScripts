@@ -20,5 +20,17 @@ class mainController:
       exit(0)
 
    def onLoad(self, event):
-      dlg = wx.FileDialog
-      wx.simple
+      dlg = wx.FileDialog(self.mainWindow, "Please select a module to load", os.getcwd(), wildcard='python files (*.py)|*.py', style=wx.FD_OPEN)
+      if dlg.ShowModal() == wx.ID_CANCEL: return
+
+      filePath = dlg.GetPath()
+      try:
+         with open(filePath, 'r') as pyFile:
+            read_data = pyFile.readlines()
+         self.buildGUI(read_data)
+      except Exception, e:
+         print e
+
+   def buildGUI(self, data=[]):
+      for line in data:
+         exec(line)
