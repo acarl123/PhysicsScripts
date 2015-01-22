@@ -86,6 +86,7 @@ class mainController:
       print 'click', ctrlName
 
    def onExec(self, event):
+      for varName, value in self.vars.copy().iteritems():
+         self.vars[varName] = eval(value)
       locals().update(self.vars)
-      # exec(self.progString)
-      eval(compile(self.progString, 'None', 'exec'))
+      exec(self.progString)
