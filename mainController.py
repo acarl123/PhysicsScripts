@@ -73,7 +73,7 @@ class mainController:
       exec('self.mainWindow.GetSizer().Add(self.lbl%s, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT, 5)' % labelName) in globals(), locals()
 
       # Creates a text box with the default value assigned in the program
-      exec('self.txt%s = NumCtrl(self.mainWindow, wx.ID_ANY, u\'%s\', wx.DefaultPosition, wx.DefaultSize, 0, fractionWidth = 10)' % (labelName, initValue)) in globals(), locals()
+      exec('self.txt%s = NumCtrl(self.mainWindow, wx.ID_ANY, u\'%s\', wx.DefaultPosition, wx.DefaultSize, 0, fractionWidth = 5)' % (labelName, initValue)) in globals(), locals()
       exec('self.mainWindow.GetSizer().Add(self.txt%s, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)' % labelName) in globals(), locals()
       if tooltip:
          tooltip = tooltip.strip()
