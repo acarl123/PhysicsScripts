@@ -1,5 +1,7 @@
+import string
 import wx
 import os, sys
+import re
 
 from genericView import genericView
 
@@ -32,5 +34,20 @@ class mainController:
          print e
 
    def buildGUI(self, data=[]):
+      progString = ''
       for line in data:
-         exec(line)
+         varRegEx = r'^[A-Za-z]+ = [0-9]+'
+         comment = ''
+         try:
+            line, comment = string.split(line, '#')
+         except:
+            pass
+         varLine = re.match(varRegEx, line)
+
+         if varLine:
+            print varLine.group(0), comment
+            exec(varLine.group(0))
+         else:
+            progString += '%s\n' % line
+
+      exec(progString)
