@@ -38,20 +38,22 @@ class mainController:
       self.progString = ''
       self.vars = {}
       for line in data:
-         varRegEx = r'^[A-Za-z]+ = [0-9]+'
+         varRegEx = r'^[A-Za-z]+ ?= ?[0-9]+\.?[0-9]*'
          comment = ''
          try:
             line, comment = string.split(line, '#')
          except:
             pass
          varLine = re.match(varRegEx, line)
-
          if varLine:
             varLine = varLine.group(0)
             varName, initValue = string.split(varLine, '=')
-            varName = varName.strip()
-            self.vars[varName] = initValue
-            self.addControl(wx.TextCtrl, varName, initValue, comment)
+            if not 'E' in str(initValue).upper():
+               varName = varName.strip()
+               self.vars[varName] = initValue
+               self.addControl(wx.TextCtrl, varName, initValue, comment)
+            else:
+               self.progString += '%s\n' % line
 
          else:
             self.progString += '%s\n' % line
@@ -91,4 +93,9 @@ class mainController:
          if isinstance(value, (float)): continue
          self.vars[varName] = eval(value)
       locals().update(self.vars)
+
+      # uncomment below for debugging
+      # with open('debugFile.txt', 'w+') as debugFile:
+      #    debugFile.writelines(self.progString)
+
       exec(self.progString)
